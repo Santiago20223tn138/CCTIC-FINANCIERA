@@ -1,0 +1,102 @@
+<div id="body">
+    <div class="text-center" style="margin-top: 25px;">
+        <h1>Consultar Cobros</h1>
+    </div>
+    <div class="col-lg-12" ng-controller="tablecontroller">
+        <div class="search-name">
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on"
+                placeholder=" SEARCH  ">
+        </div>
+        <div style="margin-top: 20px;">
+          <select class="form-control"  name="miselect" [(ngModel)]="seleccionadoRepatidor" required>
+            <option [value]="agente.id" *ngFor="let agente of agentes">{{agente.person.name}} {{agente.person.lastName}}</option>
+            </select>
+          <button type="submit" class="btn btn-primary" id="registarCliente" style="margin-top: 10px;" (click)="BuscarAgente()">Buscar</button>
+        </div>
+        <div class="text-end" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" id="registarCliente" (click)="descargarExcel()">Descargar Informacion!</button>
+            <button type="submit" class="btn btn-primary" id="registarCliente"  style="margin-left: 20px;" (click)="corte()">Realizar Corte</button>
+        </div>
+        <div class="table-responsive " style="margin-top: 15px;">
+            <div class="table-responsive " style="margin-top: 10px;">
+                <table class="table table-bordered " id="Tabla">
+                    <thead>
+                        <tr>
+                            <th class="text-center" ng-click="ordenar('Id')" style="width: 3%;">Pago</th>
+                            <th class="text-center" ng-click="ordenar('Id')" style="width: 3%;">Id</th>
+                            <th class="text-center" ng-click="ordenar('numero_cliente')" style="width: 4%;">Pendiente
+                            </th>
+                            <th class="text-center" ng-click="ordenar('edad')" style="width: 3%;">Telefono</th>
+                            <th class="text-center" ng-click="ordenar('correo')" style="width: 3%;">Dia de Pago</th>
+                            <th class="text-center" style="width: 3%;">Pago Semanal</th>
+                            <th class="text-center" style="width: 8%;">Domicilio</th>
+                            <th class="text-center" style="width: 3%;">Contrato</th>
+                            <th class="text-center" style="width: 3%;">Folio</th>
+                            <th class="text-center" style="width: 3%;">Total</th>
+                            <th class="text-center" style="width: 3%;">Pagado</th>
+                            <th class="text-center" style="width: 2%;">Pagos Relacionados</th>
+                            <th class="text-center" style="width: 8%;">Clientes</th>
+                            <th class="text-center" style="width: 8%;">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-animate="'animate'" *ngFor="let cliente of clientes | filter:searchText | paginate: { itemsPerPage: 7, currentPage: page } ">
+                        <tr>
+                            <td *ngIf="cliente.isEs_fecha_valida == 1; else elseBlock" class="numero_cliente text-center"><mat-icon  id="SiPago">done</mat-icon></td>
+                            <td class="numero_cliente text-center">{{cliente.contrato_id}} </td>
+                            <td class="numero_cliente text-center">{{cliente.pendiente}}</td>
+                            <td class="numero_cliente text-center">{{cliente.telefono_1}}</td>
+                            <td class="numero_cliente text-center">{{cliente.dia_pago}}</td>
+                            <td class="numero_cliente text-center">{{cliente.pago_semanal}}</td>
+                            <td class="numero_cliente text-center">{{cliente.domicilio}}</td>
+                            <td class="numero_cliente text-center">{{cliente.contrato}}</td>
+                            <td class="numero_cliente text-center">{{cliente.folio}}</td>
+                            <td class="numero_cliente text-center">{{cliente.total}}</td>
+                            <td class="numero_cliente text-center">{{cliente.pagado}}</td>
+                            <td class="numero_cliente text-center">{{cliente.pagos_realizados}}</td>
+                            <td class="numero_cliente text-center">{{cliente.cliente}}</td> 
+                            <td class="text-center"><button type="button" class="btn btn-circle-table " id="donlowd" data-bs-toggle="modal" data-bs-target="#ModalRegistrarDiaPago"
+                                (click)="seleccionarElPago( cliente.pago_semanal,cliente.contrato_id)"><mat-icon id="mat-icon">add</mat-icon></button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            </div>
+
+        </div>
+        <div class="modal fade" id="ModalRegistrarDiaPago" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar  Pago</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="text-center" style="margin-top: 10px;">
+                    <img src="../../../../assets/img2.svg" alt="">
+                    <h1>Registrar Pago</h1>
+                    <h2>$ {{pagoinicialseleccionado}}</h2>
+                    <h3>Pago Sugerido</h3> 
+                  </div>
+                  <form class="custom-form align-items-center justify-content-center" method="post">
+                    <div class="form-group">
+                      <label for="inicial" class="font-italic">Monto</label>
+                      <input type="number" class="form-control" name="montoDiaDepago" [(ngModel)]="montoDiaDepago" required>
+                    </div>
+                    <div class="form-group">
+                      <label for="inicial" class="font-italic">Selecciona el Día de Pago</label>
+                      <select class="form-control"  name="miselect" [value]='lunes' [(ngModel)]="seleccionado" required>
+                        <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+                        </select>
+                    </div>
+          
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                  <button type="button" class="btn btn-primary" (click)="registrarDiaDePago()"
+                    id="buttonRegistrar">Registrar!</button>
+                </div>
+              </div>
+            </div>
+    </div>
+    <ng-template #elseBlock ><td  class="numero_cliente text-center"><mat-icon id="NoPago">highlight_off</mat-icon></td></ng-template>

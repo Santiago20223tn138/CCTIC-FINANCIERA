@@ -1,0 +1,86 @@
+<div id="body">
+    <div class="text-center" style="margin-top: 25px;">
+        <h1>Consultar Corte</h1>
+    </div>
+    <div class="col-lg-12" ng-controller="tablecontroller">
+        <div class="text-center">
+            <h3 id="montoCorte">Monto de Corte</h3>
+            <p id="MontodeCorteText">{{MontodeCorte}}</p>
+            <p id="Fecha">{{Fecha}}</p>
+        </div>
+        <div class="search-name" style="margin-bottom: 15px;">
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on"
+                placeholder=" SEARCH  ">
+        </div>
+        <div class="card card-outline card-info" >
+            <h2 class="text-center" style="margin-top: 15px;"> Clientes con Pago Realizados</h2>
+            <div class="card-body">
+                <div class="table-responsive " >
+                    <div class="table-responsive ">
+                        <table class="table table-bordered " id="Tabla">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center" ng-click="contrato_id('Id')" style="width: 3%;">Id</th>
+                                <th class="text-center" ng-click="ordenar('cliente')" style="width: 4%;">Cliente
+                                </th>
+                                <th class="text-center" ng-click="ordenar('edad')" style="width: 3%;">Telefono</th>
+                                <th class="text-center" ng-click="ordenar('correo')" style="width: 3%;">Contrato</th>
+                                <th class="text-center" style="width: 3%;">Fecha</th>
+                                <th class="text-center" style="width: 8%;">Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-animate="'animate'" *ngFor="let corte of cortes | filter:searchText | paginate: { itemsPerPage: 7, currentPage: page } ">
+                            <tr *ngIf="(corte.es_fecha_valida == 1) " >
+                                <td class="numero_cliente text-center">{{corte.contrato_id}}</td>
+                                <td class="numero_cliente text-center">{{corte.cliente}}</td>
+                                <td class="numero_cliente text-center">{{corte.telefono_1}}</td>
+                                <td class="numero_cliente text-center">{{corte.contrato}}</td>
+                                <td class="numero_cliente text-center">{{corte.folio}}</td>
+                                <td class="numero_cliente text-center">{{corte.monto}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="card card-outline card-warning " >
+            <h2 class="text-center" style="margin-top: 15px;"> Clientes sin Pago Realizados</h2>
+            <div class="card-body">
+                <div class="table-responsive " >
+                    <div class="table-responsive ">
+                        <table class="table table-bordered " id="Tabla">
+
+                        <thead>
+                            <tr>
+                                <th class="text-center" ng-click="contrato_id('Id')" style="width: 3%;">Id</th>
+                                <th class="text-center" ng-click="ordenar('cliente')" style="width: 4%;">Cliente
+                                </th>
+                                <th class="text-center" ng-click="ordenar('edad')" style="width: 3%;">Telefono</th>
+                                <th class="text-center" ng-click="ordenar('correo')" style="width: 3%;">Contrato</th>
+                                <th class="text-center" style="width: 3%;">Fecha</th>
+                                <th class="text-center" style="width: 8%;">Monto Debido</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-animate="'animate'" *ngFor="let corte of cortes | filter:searchText | paginate: { itemsPerPage: 7, currentPage: page } ">
+                            <tr *ngIf="(corte.es_fecha_valida == 0) " >
+                                <td class="numero_cliente text-center">{{corte.contrato_id}}</td>
+                                <td class="numero_cliente text-center">{{corte.cliente}}</td>
+                                <td class="numero_cliente text-center">{{corte.telefono_1}}</td>
+                                <td class="numero_cliente text-center">{{corte.contrato}}</td>
+                                <td class="numero_cliente text-center">{{corte.folio}}</td>
+                                <td class="numero_cliente text-center">{{corte.pago_semanal}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

@@ -1,0 +1,88 @@
+
+<div id="body">
+    <div class="text-center">
+        <img src="../../../../assets/Img1.svg" alt="">
+        <h1>Registar Cliente</h1>
+    </div>
+    <div class="row" id="seccion">
+        <div class="col-md-4 col-sm-6 col-12">
+            <label for="" >Nombre :</label>
+            <input type="text" class="form-control " [(ngModel)]="nombreCli" name="password" (ngModelChange)="ValidationDatas()" required>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12">
+            <label for="">Apellido Paterno :</label>
+            <input type="text" class="form-control" [(ngModel)]="apellidoCli" name="password" (ngModelChange)="ValidationDatas()" required>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12">
+            <label for="">Apellido Materno :</label>
+            <input type="text" class="form-control" [(ngModel)]="apellidoCli2" name="password" (ngModelChange)="ValidationDatas()" required>
+        </div>
+    </div>
+    <div class="row" id="seccion">
+        <div class="col-md-4 col-sm-6 col-12">
+            <label for="" >Correo Electronico :</label>
+            <input type="email" class="form-control " [(ngModel)]="correo" name="password"  (ngModelChange)="ValidationDatas()"required>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12">
+            <label for="">Telefeno 1:</label>
+            <input type="number" class="form-control" [(ngModel)]="telefono1" name="password"  (ngModelChange)="ValidationDatas()"required>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12">
+            <label for="">Telefeno 2:</label>
+            <input type="number" class="form-control" [(ngModel)]="telefono2" name="password" (ngModelChange)="ValidationDatas()" required>
+        </div>
+    </div>
+    <div class="row" id="seccion">
+        <div class="col-md-4 col-sm-6 col-12">
+            <label for="" >Edad:</label>
+            <input type="text" class="form-control " [(ngModel)]="edad" name="edad"  (ngModelChange)="ValidationDatas()"required>
+        </div>
+        <div class="col-md-4 col-sm-6 col-12">
+            <label for="">Ingreso Semanal:</label>
+            <input type="number" class="form-control" [(ngModel)]="ingresoSem" name="password"  (ngModelChange)="ValidationDatas()"required>
+        </div>
+        <div class="col-md-4 col-sm-12 col-12">
+            <label for="">Domicilio:</label>
+            <input type="text" class="form-control" [(ngModel)]="domicilio" name="password" (ngModelChange)="ValidationDatas()" required>
+        </div>
+    </div>
+    <div class="row" id="seccion">
+        <div class="col-12">
+            <label for="" >Detalles del domocilio:</label>
+            <textarea class="form-control" aria-label="With textarea" [(ngModel)]="detalleDomicilio" (ngModelChange)="ValidationDatas()"></textarea>
+        </div>
+
+    </div>
+    <div class="text-center" style="margin-top: 10px;">
+        <img src="../../../../assets/img3.svg" alt="">
+        <h1>Registar referencias</h1>
+    </div>
+    <div class="row" id="seccion">
+        <div class="col-12">
+            <label for="" >Nombre Completo :</label>
+            <input type="text" class="form-control " [(ngModel)]="nombreCompletoReferencia" name="password" (ngModelChange)="ValidationDatas()" [disabled]="!flag"  required>
+        </div>
+        <div id="seccion" class="col-md-4 col-sm-6 col-12">
+            <label for="">Telefono 1:</label>
+            <input type="number" class="form-control" [(ngModel)]="telefono1Referencia" name="password" (ngModelChange)="ValidationDatas()" [disabled]="!flag" required>
+        </div>
+        <div  id="seccion" class=" col-md-4 col-sm-6 col-12">
+            <label for="">Telefono 2:</label>
+            <input type="number" class="form-control" [(ngModel)]="telefono2Referencia" name="password" (ngModelChange)="ValidationDatas()" [disabled]="!flag" required>
+        </div>
+        <div id="seccion" class=" col-md-4 col-sm-6 col-12">
+            <label for="">Parentezco :</label>
+            <input type="text" class="form-control" [(ngModel)]="parentezco" name="password"  (ngModelChange)="ValidationDatas()" [disabled]="!flag" required>
+        </div>
+    </div>
+    
+    <div class="row" id="seccion2">
+        
+        <div class="text-center" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" (click)="RegistrarCliente()" [disabled]="!flag1">Registrar!</button>
+
+        </div>
+
+    </div>
+
+</div>

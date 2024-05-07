@@ -1,0 +1,46 @@
+<div id="body">
+    <div class="text-center" style="margin-top: 25px;">
+        <h1>Consultar Cortes Historicos</h1>
+    </div>
+    <div class="col-lg-12" ng-controller="tablecontroller">
+        <div class="search-name">
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on"
+                placeholder=" SEARCH  ">
+        </div>
+        <div class="text-end" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" id="registarCliente" (click)="descagar('')">Descargar Informacion!</button>
+        </div>
+        <div class="table-responsive " style="margin-top: 15px;">
+            <div class="table-responsive " style="margin-top: 10px;">
+                <table class="table table-bordered " id="Tabla">
+                    <thead>
+                        <tr>
+                            <th class="text-center" style="width: 10%;">Pago</th>
+                            <th class="text-center" style="width: 5%;">#</th>
+                            <th class="text-center" style="width: 10%;">Folio</th>
+                            <th class="text-center" style="width: 20%;">Contrato</th>
+                            <th class="text-center" style="width: 20%;">Nombre</th>
+                            <th class="text-center" style="width: 20%;">Telefono</th>
+                            <th class="text-center" style="width: 20%;">Fecha</th>
+                            <th class="text-center" style="width: 10%;">Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody ng-animate="'animate'" *ngFor="let corte of cortes | filter:searchText | paginate: { itemsPerPage: 7, currentPage: page };  index as i " data-index="#i">
+                        <tr>
+                            <td *ngIf="corte.pagado == 1; else elseBlock" class="numero_cliente text-center"><mat-icon  id="SiPago">done</mat-icon></td>
+                            <td class="numero_cliente text-center">{{corte.id_hisotrico.id}} </td>
+                            <td class="numero_cliente text-center">{{corte.id_hisotrico.folio}}</td>
+                            <td class="numero_cliente text-center">{{corte.id_hisotrico.credito.contrato}}</td>
+                            <td class="numero_cliente text-center">{{corte.idcredito.cliente.nombre}} {{corte.idcredito.cliente.paterno}} {{corte.idcredito.cliente.materno}}</td>
+                            <td class="numero_cliente text-center">{{corte.idcredito.cliente.telefono_1}}</td>
+                            <td class="numero_cliente text-center">{{corte.id_hisotrico.fecha}}</td>
+                            <td class="numero_cliente text-center">{{corte.id_hisotrico.monto}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #elseBlock ><td  class="numero_cliente text-center"><mat-icon id="NoPago">highlight_off</mat-icon></td></ng-template>

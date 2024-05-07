@@ -1,0 +1,107 @@
+
+<div id="body">
+  <div class="text-center" style="margin-top: 25px;">
+    <h1>Creditos Cliente</h1>
+  </div>
+  <div class="search-name">
+    <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on"
+      placeholder=" SEARCH  ">
+  </div>
+  <div class="text-end" style="margin-top: 10px;">
+    <button type="submit" class="btn btn-primary" id="registarCliente" data-bs-toggle="modal"
+      data-bs-target="#ModaRegister">Registrar Nuevo Credito!</button>
+  </div>
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-xl-3 col-lg-4 col-md-8  col-12  " *ngFor="let credito of creditos | filter:searchText | paginate: { itemsPerPage: 6, currentPage: page }"
+      style="border-radius: 2.5rem;">
+      <div class="card mb-3 " style="border-radius: 2.5rem;">
+        <div class="card-body " style="      border-radius: 2.5rem;
+          border: #f9862c solid 1px;
+          box-shadow: 13px 13px 20px rgba(249, 134, 44 ,0.5), -13px -13px 20px #ffffff;
+          color: black;">
+          <h1 class="text-center">{{ credito.contrato }}</h1>
+          <h3 class="text-center">Folio: </h3>
+          <h3 class="text-center">{{ credito.folio }} </h3>
+          <h3 class="text-center">Día de pago: {{ credito.dia_pago }} </h3>
+          <h3 class="text-center">Monto: {{ credito.monto | currency:'USD':'symbol':'1.2-2' }} </h3>
+          <h3 class="text-center">Pago inicial: {{ credito.pago_inicial | currency:'USD':'symbol':'1.2-2' }} </h3>
+          <h3 class="text-center">Pago semanal: {{ credito.pago_semanal | currency:'USD':'symbol':'1.2-2' }} </h3>
+          <h3 class="text-center">Fecha: 20{{ credito.fecha }} </h3>
+          <h3 class="text-center">Semanas: {{ credito.semanas }} </h3>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary" (click)="descagar( credito.id,credito.contrato)"
+              id="buttonRegistrar">Descargar PDF!</button>
+          </div>
+          <div class="text-center" *ngIf="(credito.dia_pago == '') " style="margin-top: 15px;">
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#ModalRegistrarDiaPago"
+              id="buttonPagoNuevo" (click)="seleccionarElPago( credito.pago_inicial,credito.id)">Registrar Primer Pago</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
+
+  </div>
+</div>
+
+<div class="modal fade" id="ModaRegister" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Nuevo Credito!</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form class="custom-form align-items-center justify-content-center" method="post">
+          <div class="form-group">
+            <label for="inicial" class="font-italic">Monto</label>
+            <input type="number" class="form-control" name="monto" [(ngModel)]="monto" required>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="registrarCredito()"
+          id="buttonRegistrar">Registrar!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="ModalRegistrarDiaPago" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Primer Pago</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center" style="margin-top: 10px;">
+          <img src="../../../../assets/img2.svg" alt="">
+          <h1>Registrar Pago</h1>
+          <h2>$ {{pagoinicialseleccionado}}</h2>
+          <h3>Pago Inicial Sugerido</h3> 
+        </div>
+        <form class="custom-form align-items-center justify-content-center" method="post">
+          <div class="form-group">
+            <label for="inicial" class="font-italic">Monto</label>
+            <input type="number" class="form-control" name="montoDiaDepago" [(ngModel)]="montoDiaDepago" required>
+          </div>
+          <div class="form-group">
+            <label for="inicial" class="font-italic">Selecciona el Día de Pago</label>
+            <select class="form-control"  name="miselect" [value]='lunes' [(ngModel)]="seleccionado" required>
+              <option [value]="item" *ngFor="let item of lista">{{item}}</option>
+              </select>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="registrarDiaDePago()"
+          id="buttonRegistrar">Registrar!</button>
+      </div>
+    </div>
+  </div>
+</div>

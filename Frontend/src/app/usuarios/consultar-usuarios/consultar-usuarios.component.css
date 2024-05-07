@@ -1,0 +1,80 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgba(249, 134, 44 ,1);
+  }
+
+  li {
+    float: left;
+  }
+
+  li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  li a:hover {
+    background-color: #111;
+  }
+
+  @media screen and (max-width: 600px) {
+    li {
+      float: none;
+      width: 100%;
+    }
+  }
+
+  h1{
+    color: rgba(249, 134, 44 ,1);
+  }
+  #registarCliente{
+    text-transform: uppercase;
+    border: none;
+    font-size: 0.875rem;
+    color: #ffffff;
+    font-weight: bold;
+    background-color: #f9862c;
+    width: 20%;
+    padding: 0.500rem 0rem;
+    border-radius: 1.5rem;
+    box-shadow: 3px 3px 8px #b1b1b1, -3px -3px 8px #ffffff;
+    cursor: pointer;
+  }
+  td{
+    background-color: #fff;
+  }
+  #mat-icon {
+
+    color: white;
+    }
+  #donlowd{
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+    margin: 5px;
+
+  }
+  #SiPago{
+    color: green;
+  }
+  #NoPago{
+    color: red;
+  }
+
+  #donlowd2{
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 5px;
+  }

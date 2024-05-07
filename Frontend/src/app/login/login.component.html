@@ -1,0 +1,19 @@
+
+        <div class="card-body2 ">
+          <form class="custom-form align-items-center justify-content-center" method="post" (ngSubmit)="Login()">
+            <img src="../../assets/logo.jpeg  " alt="Imagen" class="img-fluid">
+            <h1 class="card-title ">INICIA SESIÓN </h1>
+            <br>
+            <div class="form-group" id="email">
+              <label for="email" >Email</label>
+              <input type="email" class="form-control" [(ngModel)]="email" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="password" class="font-italic">Password</label>
+              <input type="password" class="form-control" [(ngModel)]="password" name="password" required>
+            </div>
+            <p class="small">¿No tienes una cuenta? <a href="#">Regístrate</a></p>
+
+            <button type="submit" class="btn btn-primary">Entrar</button>
+          </form>
+        </div>

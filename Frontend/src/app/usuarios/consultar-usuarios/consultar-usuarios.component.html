@@ -1,0 +1,184 @@
+<div id="body">
+    <div class="text-center" style="margin-top: 25px;">
+        <h1>Consultar Usuarios</h1>
+    </div>
+    <div class="col-lg-12" ng-controller="tablecontroller">
+        <div class="search-name">
+            <input class="form-control" type="text" name="search" [(ngModel)]="searchText" autocomplete="on"
+                placeholder=" SEARCH  ">
+        </div>
+        <div class="text-end" style="margin-top: 10px;">
+            <button type="submit" class="btn btn-primary" id="registarCliente" data-bs-toggle="modal"
+                data-bs-target="#ModalRegistrarDiaPago">Registrar Nuevo Usuario!</button>
+        </div>
+        <div class="card card-outline card-info" style="margin-top: 25px;">
+            <div class="card-body">
+                <h2 class="text-center"> Usuarios Administradores</h2>
+                <div class="table-responsive" style="margin-top: 0px;">
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th class=" text-center" style="width: 5%;">#</th>
+                                <th class="text-center" style="width: 15%;">Correo</th>
+                                <th class="text-center" style="width: 30%;">Nombre</th>
+                                <th class="text-center" style="width: 15%;">phone</th>
+                                <th  class="text-center"  style="width: 10%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-animate="'animate'"
+                            *ngFor="let usuario of usuarios | filter:searchText  | paginate: { itemsPerPage: 7, currentPage: page }">
+                            <tr *ngIf="(usuario.authorities[0].id == 1) ">
+                                <td class=" text-center">{{usuario.id}}</td>
+                                <td class=" text-center">{{usuario.username}}</td>
+                                <td class="text-center">{{usuario.person.name | uppercase }} {{usuario.person.lastName |
+                                    uppercase }} </td>
+                                <td class=" text-center">{{usuario.person.phone }} </td>
+                                <td class="numero_cliente text-center">
+                                    <button class="btn btn-circle-table " type="button"  id="donlowd" data-bs-toggle="modal"
+                                    data-bs-target="#ModalUpdateUsuario"  (click)="mandarDatosUpdate(usuario.id,usuario.username)" title="Modificar Usuario"><mat-icon>folder_shared</mat-icon></button>
+                                    <button class="btn btn-circle-table " (click)="updateStatusUsuario(usuario.id)" type="button"  id="donlowd2" title="Desactivar o Activar Usuario" > <div *ngIf="usuario.status == 1; then Block else elseBlock"></div></button>                                </td>
+
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                        nextLabel="Siguiente"></pagination-controls>
+                </div>
+            </div>
+        </div>
+        <div class="card card-outline card-warning" style="margin-top: 25px;">
+            <div class="card-body">
+                <h2 class="text-center"> Usuarios Agentes</h2>
+                <div class="table-responsive" style="margin-top: 0px;">
+                    <table class="table table-bordered ">
+                        <thead>
+                            <tr>
+                                <th class=" text-center" style="width: 5%;">#</th>
+                                <th class="text-center" style="width: 15%;">Correo</th>
+                                <th class="text-center" style="width: 30%;">Nombre</th>
+                                <th class="text-center" style="width: 15%;">phone</th>
+                                <th  class="text-center"  style="width: 10%;">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody ng-animate="'animate'"
+                            *ngFor="let usuario of usuarios | filter:searchText  | paginate: { itemsPerPage: 7, currentPage: page }">
+                            <tr *ngIf="(usuario.authorities[0].id == 2) ">
+                                <td class=" text-center">{{usuario.id}}</td>
+                                <td class=" text-center">{{usuario.username}}</td>
+                                <td class="text-center">{{usuario.person.name | uppercase }} {{usuario.person.lastName | uppercase }} </td>
+                                <td class=" text-center">{{usuario.person.phone }} </td>
+                                <td class="numero_cliente text-center">
+                                    <button class="btn btn-circle-table " type="button"  id="donlowd" data-bs-toggle="modal"
+                                    data-bs-target="#ModalUpdateUsuario" (click)="mandarDatosUpdate(usuario.id,usuario.username)" title="Modificar Usuario"><div *ngIf="usuario.status == 1; then BlockArchivo else elseBlockArchivo"></div></button>
+                                    <button class="btn btn-circle-table " (click)="updateStatusUsuario(usuario.id)" type="button"  id="donlowd2" title="Desactivar o Activar Usuario" > <div *ngIf="usuario.status == 1; then Block else elseBlock"></div></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <pagination-controls (pageChange)="page = $event" previousLabel="Anterior"
+                        nextLabel="Siguiente"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<ng-template #Block ><mat-icon id="SiPago">done</mat-icon></ng-template>
+<ng-template #elseBlock ><mat-icon id="NoPago">highlight_off</mat-icon></ng-template>
+
+<ng-template #BlockArchivo ><mat-icon >folder_shared</mat-icon></ng-template>
+<ng-template #elseBlockArchivo ><mat-icon >folder_shared</mat-icon ></ng-template>
+
+<div class="modal fade" id="ModalRegistrarDiaPago" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Nuevo Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center" style="margin-top: 10px;">
+                    <img src="../../../../assets/img3.svg" alt="">
+                    <h1>Nuevo Usuario</h1>
+                </div>
+                <form class="custom-form align-items-center justify-content-center" method="post">
+                    <!-- Asegúrate de corregir los atributos name según corresponda -->
+                    <div class="form-group">
+                        <label for="nombre">Nombre</label>
+                        <input type="text" class="form-control" name="nombre"  [(ngModel)]="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" class="form-control" name="apellidos"  [(ngModel)]="apellidos" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Telefono</label>
+                        <input type="text" class="form-control" name="telefono"  [(ngModel)]="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo electronico</label>
+                        <input type="email" class="form-control" name="email"[(ngModel)]="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="domicilio">Domicilio</label>
+                        <input type="text" class="form-control" name="domicilio" [(ngModel)]="domicilio" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="form-control" name="password"  [(ngModel)]="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordconfirm">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" name="passwordconfirm" [(ngModel)]="passwordconfirm" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="rol">Selecciona el Rol</label>
+                        <select class="form-control" name="rol" [(ngModel)]="seleccionado" required>
+                            <option value="2" selected> Promotora</option>
+                            <option value="1">Administrador</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="buttonRegistrar" (click)="registrarUsuario()">Registrar!</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalUpdateUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Registrar Nuevo Usuario</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center" style="margin-top: 10px;">
+                    <img src="../../../../assets/img3.svg" alt="">
+                    <h1>Modificar Usuario</h1>
+                    <h2> {{CorreoUpdate}}</h2>
+                    <h3>Puedes modificar su Contraseña</h3> 
+                </div>
+                <form class="custom-form align-items-center justify-content-center" method="post">
+                    <!-- Asegúrate de corregir los atributos name según corresponda -->
+                    <div class="form-group">
+                        <label for="passwordUpdate">Contraseña</label>
+                        <input type="text" class="form-control" name="passwordUpdate"  [(ngModel)]="passwordUpdate" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordConfirmUpdate">Confirmar Contraseña</label>
+                        <input type="text" class="form-control" name="passwordConfirmUpdate"  [(ngModel)]="passwordConfirmUpdate" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="buttonRegistrar" (click)="UpdateUsuario()">Registrar!</button>
+            </div>
+        </div>
+    </div>
+</div>
